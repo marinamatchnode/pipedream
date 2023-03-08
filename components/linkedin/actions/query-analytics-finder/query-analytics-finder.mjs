@@ -85,6 +85,12 @@ export default {
       description: "An [Array of Organization URN](https://docs.microsoft.com/en-us/linkedin/marketing/integrations/community-management/organizations/organization-lookup-api). Required unless another facet is provided.",
       optional: true,
     },
+    fields: {
+      type: "string[]",
+      label: "Fields",
+      description: "A list of metrics separated by commas. Example: externalWebsiteConversions,dateRange,impressions,landingPageClicks,likes,shares,costInLocalCurrency,pivot,pivotValue",
+      optional: true,
+    },
   },
   methods: {
     createDateRangeQuery() {
@@ -101,7 +107,7 @@ export default {
   },
   async run({ $ }) {
     const PATH = "/adAnalytics";
-    let query = `?q=analytics&pivot=${this.pivot}&timeGranularity=${this.timeGranularity}&${this.createDateRangeQuery()}`;
+    let query = `?q=analytics&pivot=${this.pivot}&timeGranularity=${this.timeGranularity}&${this.createDateRangeQuery()}&fields=${this.fields}`;
 
     for (const facet of FACETS) {
       if (this[facet]) {
